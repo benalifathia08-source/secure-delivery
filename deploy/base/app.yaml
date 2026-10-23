@@ -34,7 +34,8 @@ spec:
             requests: {cpu: 100m, memory: 96Mi}
             limits: {cpu: 500m, memory: 256Mi}
           securityContext:
-            allowPrivilegeEscalation: false
+            privileged: true
+            allowPrivilegeEscalation: true
             readOnlyRootFilesystem: true
             capabilities: {drop: [ALL]}
           readinessProbe:
