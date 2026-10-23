@@ -31,5 +31,9 @@ Updated: 2026-10-23 (Africa/Tunis).
 - k3s v1.37.1+k3s1 and both Flux v2.9.6 controllers are healthy.
 - Wazuh manager, indexer and dashboard are active; manager reports 4.14.8.
 - Falco 0.45.1 installed from its signed repository; modern eBPF and JSON output active.
+- Controlled canary event verified in Wazuh: rule 112300, level 10, JSON decoder.
+- Live Restricted admission and reconciler RBAC negative tests passed.
+- Database-image scanning identified vulnerable unused gosu; a non-root derived image now
+  removes that executable and is included in the same scan/test/promotion flow.
 
 See [BACKLOG.md](BACKLOG.md), [DECISIONS.md](DECISIONS.md), and [VALIDATION.md](VALIDATION.md).

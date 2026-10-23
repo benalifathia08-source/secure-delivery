@@ -51,7 +51,7 @@ def gate(name, action):
     started = time.monotonic()
     try:
         action()
-    except (subprocess.CalledProcessError, OSError, RuntimeError) as error:
+    except (subprocess.CalledProcessError, OSError, RuntimeError, ValueError) as error:
         RESULTS.append(
             {
                 "gate": name,
@@ -85,7 +85,14 @@ def integration(candidate):
                 "POSTGRES_PASSWORD",
                 "-v",
                 f"{ROOT / 'deploy/base/init.sql'}:/docker-entrypoint-initdb.d/init.sql:ro",
-                image("postgres"),
+                "--read-only",
+                "--cap-drop=ALL",
+                "--security-opt=no-new-privileges:true",
+                "--tmpfs",
+                "/var/run/postgresql:rw,uid=70,gid=70,size=16m",
+                "--tmpfs",
+                "/tmp:rw,uid=70,gid=70,size=32m",
+                "secure-delivery-db:ci",
             ],
             env=env,
         )
@@ -329,13 +336,27 @@ def main():
                 "1",
                 "--ignorefile",
                 "/src/.trivyignore.yaml",
-                "--show-suppressed",
                 "--format",
                 "json",
                 "--output",
                 "/reports/trivy-platform.json",
                 "/src/deploy/platform",
             ],
+        ),
+    )
+    database_built = gate(
+        "database-build",
+        lambda: run(
+            [
+                "docker",
+                "build",
+                "--pull",
+                "-f",
+                "database.Dockerfile",
+                "-t",
+                "secure-delivery-db:ci",
+                ".",
+            ]
         ),
     )
     gate(
@@ -354,8 +375,9 @@ def main():
                 "json",
                 "--output",
                 "/reports/trivy-database.json",
-                image("postgres"),
+                "secure-delivery-db:ci",
             ],
+            ["/var/run/docker.sock:/var/run/docker.sock"],
         ),
     )
     gate(
@@ -390,7 +412,8 @@ def main():
                 ["/var/run/docker.sock:/var/run/docker.sock"],
             ),
         )
-        gate("integration-and-zap", lambda: integration(candidate))
+        if database_built:
+            gate("integration-and-zap", lambda: integration(candidate))
     summary = {
         "source_commit": os.environ.get("GITHUB_SHA", "local"),
         "gates": RESULTS,

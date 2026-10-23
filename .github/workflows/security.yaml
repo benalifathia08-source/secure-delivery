@@ -18,6 +18,7 @@ jobs:
       packages: write
     outputs:
       image: ${{ steps.publish.outputs.image }}
+      database_image: ${{ steps.publish.outputs.database_image }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -45,6 +46,11 @@ jobs:
           docker push "$repository:$GITHUB_SHA"
           digest=$(docker inspect --format='{{index .RepoDigests 0}}' "$repository:$GITHUB_SHA")
           echo "image=$digest" >> "$GITHUB_OUTPUT"
+          database_repository="$repository-database"
+          docker tag secure-delivery-db:ci "$database_repository:$GITHUB_SHA"
+          docker push "$database_repository:$GITHUB_SHA"
+          database_digest=$(docker inspect --format='{{index .RepoDigests 0}}' "$database_repository:$GITHUB_SHA")
+          echo "database_image=$database_digest" >> "$GITHUB_OUTPUT"
           docker logout ghcr.io
       - name: Publish readable gate summary
         if: always()
@@ -73,4 +79,5 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SOURCE_SHA: ${{ github.sha }}
           RELEASE_IMAGE: ${{ needs.verify.outputs.image }}
+          DATABASE_IMAGE: ${{ needs.verify.outputs.database_image }}
         run: python scripts/promote.py

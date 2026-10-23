@@ -26,8 +26,11 @@ def api(path, payload=None, method=None):
 def main():
     source = os.environ["SOURCE_SHA"]
     image = os.environ["RELEASE_IMAGE"]
+    database_image = os.environ["DATABASE_IMAGE"]
     if not re.fullmatch(r"ghcr\.io/[a-z0-9_./-]+@sha256:[a-f0-9]{64}", image):
         raise ValueError("Promotion requires a GHCR image digest")
+    if not re.fullmatch(r"ghcr\.io/[a-z0-9_./-]+@sha256:[a-f0-9]{64}", database_image):
+        raise ValueError("Promotion requires a GHCR database digest")
     if api("git/ref/heads/main")["object"]["sha"] != source:
         raise RuntimeError("Refusing stale promotion: main has moved")
     source_commit = api("git/commits/" + source)
@@ -41,10 +44,19 @@ def main():
         "apiVersion: kustomize.config.k8s.io/v1beta1\nkind: Kustomization\n"
         "resources:\n  - ../../base\nimages:\n  - name: secure-delivery-candidate\n"
         f"    newName: {image.split('@')[0]}\n    digest: {image.split('@')[1]}\n"
+        "  - name: secure-delivery-database\n"
+        f"    newName: {database_image.split('@')[0]}\n"
+        f"    digest: {database_image.split('@')[1]}\n"
     )
     provenance = (
         json.dumps(
-            {"source_commit": source, "image": image, "run": os.environ["GITHUB_RUN_ID"]}, indent=2
+            {
+                "source_commit": source,
+                "image": image,
+                "database_image": database_image,
+                "run": os.environ["GITHUB_RUN_ID"],
+            },
+            indent=2,
         )
         + "\n"
     )

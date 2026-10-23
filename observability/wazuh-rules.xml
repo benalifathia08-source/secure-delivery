@@ -15,7 +15,7 @@
   </rule>
   <rule id="112302" level="6">
     <if_sid>112301</if_sid>
-    <field name="status" type="pcre2">^5\d\d$</field>
+    <field name="http_status" type="pcre2">^5\d\d$</field>
     <description>Secure delivery application server error</description>
     <group>application_error,</group>
   </rule>

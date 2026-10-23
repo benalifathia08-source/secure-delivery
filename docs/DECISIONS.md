@@ -66,3 +66,11 @@ Accepted 2026-10-23. A host collector reads recent application pod logs, selects
 HTTP event fields, deduplicates request IDs in bounded memory, and writes JSON for the Wazuh
 agent. It does not forward arbitrary pod output, request data, or database credentials.
 This lab collector polls every 15 seconds and is not a lossless production logging system.
+
+## ADR-013 — Remove an unused vulnerable database executable
+
+Accepted 2026-10-23. Scanning the official PostgreSQL image exposed HIGH/CRITICAL Go runtime
+findings in `/usr/local/bin/gosu`. Since the database always starts as UID 70, its entrypoint
+does not need the root-to-postgres helper. A minimal derived image removes it and sets USER 70.
+Scan that final image, test it with a read-only root, and publish/promote its exact digest
+alongside the application. No vulnerability suppression was added.

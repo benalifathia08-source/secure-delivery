@@ -42,6 +42,7 @@ def main():
                 fields = ["event", "request_id", "method", "route", "status"]
                 selected = {key: event[key] for key in fields if key in event}
                 selected["service"] = "secure-delivery"
+                selected["http_status"] = selected.pop("status", None)
                 events.append(json.dumps(selected))
             while len(seen) > 10000:
                 seen.popitem(last=False)

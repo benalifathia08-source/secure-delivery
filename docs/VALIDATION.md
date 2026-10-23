@@ -53,3 +53,16 @@ Application log collector is active. End-to-end Wazuh events are not yet verifie
 
 The third hosted run completed ZAP successfully but rejected platform networking reconciliation
 permissions. EX-003 documents that required, namespace-scoped controller privilege.
+
+## Live runtime and access-control evidence
+
+On 2026-10-23 at 14:02 UTC, a disposable Restricted pod read the harmless canary path.
+Falco emitted `Secure Delivery Canary Read`; Wazuh decoded the event as JSON and fired
+rule 112300 at level 10. [Sanitized alert](../evidence/runtime-detection.json).
+The same run verified rejection of a privileged pod by Pod Security Admission and denial
+of reconciler access to Secrets, other namespaces, and RoleBindings.
+[Cluster checks](../evidence/admission-rbac-runtime.json).
+
+The fourth hosted run passed ZAP and scanner negative tests. It rejected the database's
+unused vulnerable gosu binary and an unsupported Trivy CLI flag. The flag was removed;
+the database image is being rebuilt without the vulnerable executable. Promotion remained blocked.
