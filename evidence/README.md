@@ -17,6 +17,13 @@ identities, credentials, full raw events and kubeconfigs excluded.
 | rollback-action.json | A new Git commit restored a previously approved release without force push |
 | release-after-rollback.json | Version 0.1.0 became healthy with the expected runtime digest |
 | release-restored-current.json | Version 0.1.1 was restored after the recovery test |
+| dependency-update-ci.json | All sixteen main gates passed after the Gunicorn 26.2.0 update |
+| final-live-check.json | Updated dependency ran healthy, both image digests matched, Flux was Ready, test resources were removed and existing n8n was running before shutdown |
+| final-cluster-verification.json | Repeated live admission, RBAC, network allow/deny and runtime canary checks passed |
+| final-indexed-alerts.json | Fresh runtime and application events reached the Wazuh indexer over verified TLS |
+| final-backup-restore.json | Final private backup restored with the expected inventory; disposable restore database removed |
+| final-branch-protection.json | Main still requires the Actions verify check and PR, including administrators |
+| final-power-state.json | Both guests were asked to shut down gracefully and VMware reported zero running VMs |
 
 The runtime canary is a controlled simulation, not a claim of a successful exploit.
 Workflow artifacts contain detailed scanner reports and expire after seven days; these

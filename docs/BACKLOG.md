@@ -19,13 +19,16 @@ Update this file and STATUS.md whenever a feature, milestone, decision, or block
 | B13 | P1 | Exceptions and maintenance | Complete | Three scoped expiring exceptions; Dependabot enabled; rendered manifests scanned |
 | B14 | P1 | Portfolio documentation and evidence | Complete | Runbooks, decisions, threat model and sanitized observed results published |
 | B15 | P0 | Scan and promote database image too | Complete | Derived database image scanned, tested and deployed by digest |
+| B16 | P1 | Final cleanup and handoff | Complete | Dependency update passed PR/main gates and live checks; historical notes reconciled; report/runbooks and shutdown evidence published |
 
 ## Maintenance and optional next iteration
 
 | ID | Work | State | Next action |
 |---|---|---|---|
-| O01 | Dependency updates | Ongoing | Review Dependabot PR #1; a newer major Gunicorn is not automatically merged |
+| O01 | Dependency updates | Current PR resolved; ongoing maintenance | PR #1 merged and Gunicorn 26.2.0 verified live; review future Dependabot PRs |
 | O02 | Exception review | Due before 2026-11-22 | Re-evaluate EX-001, EX-002 and EX-003; expired entries block new releases |
 | O03 | Scheduled rescanning | Optional | Add periodic verification without unnecessary image promotion |
 | O04 | Off-host backup retention | Optional | Encrypt backups and test recovery after loss of the whole VM |
 | O05 | Image signing and admission verification | Optional | Add attestations and signature enforcement as a separate scoped milestone |
+| O06 | Clean-OS VM rebuild drill | Optional, unverified | Follow bootstrap on a new VM and validate fresh credentials, storage and telemetry enrollment |
+| O07 | Recorded portfolio walkthrough | Optional, not recorded | Follow DEMO.md and omit private lab details from the recording |

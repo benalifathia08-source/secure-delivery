@@ -18,3 +18,7 @@ secret, private SSH key, kubeconfig, registry token, or database credential is s
 
 The Kubernetes API is reachable on the private VM network for cluster component routing.
 There is no public ingress or router port forward configured by this project.
+
+At final handoff, both lab guests were gracefully shut down and VMware reported zero
+running VMs. The table records their last verified running configuration. Start Wazuh
+and then Ubuntu using the resume procedure in OPERATIONS.md before a demonstration.

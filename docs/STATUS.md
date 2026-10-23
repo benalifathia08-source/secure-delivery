@@ -2,7 +2,8 @@
 
 Updated: 2026-10-23 (Africa/Tunis).
 
-**State: initial project scope complete and verified. Application version 0.1.1 is healthy.
+**State: initial project scope and final cleanup complete. Application 0.1.1 with Gunicorn
+26.2.0 was verified healthy before both lab VMs were gracefully shut down on 2026-10-23.
 Repository changes use protected pull requests; ongoing maintenance remains tracked below.**
 
 | Milestone | State | Completion evidence required |
@@ -17,16 +18,18 @@ Repository changes use protected pull requests; ongoing maintenance remains trac
 ## Inventory
 
 - Windows host: Git 2.55.0, Python 3.12.10, SSH and VMware Workstation available.
-- Docker, kubectl, GitHub CLI and working WSL installation not found on PATH.
+- Initial host inventory found no Docker, kubectl, GitHub CLI or working WSL on PATH.
+  Checksum-verified client tools were subsequently installed under ignored `.tools/`;
+  Docker and Kubernetes run inside the Ubuntu VM.
 - Ubuntu VM: 2 virtual CPUs, 6 GiB memory, NAT networking; SSH verified with existing key.
 - Linux kernel 6.8.0-147-generic, Docker 29.1.3 and active Wazuh agent verified.
-- Existing n8n Docker workload is outside this project's scope; keep it running.
-- Ubuntu disk has approximately 13 GiB free before cluster installation.
-- Existing Wazuh VM and prior SOC lab documentation found; services not yet verified.
+- Existing n8n Docker workload is outside this project's scope; it was preserved running.
+- Ubuntu disk has approximately 9.4 GiB free after installation (13 GiB before installation).
+- Existing Wazuh VM retained; manager, indexer, dashboard and Filebeat verified active.
 - GitHub connector identifies the account but lists no accessible repositories. Git credential
   manager provides working CLI authentication without exposing credentials.
 - Local dependency tooling is installed under ignored `.tools/`.
-- Eight local application/policy tests pass; lint passes; Kustomize renders successfully.
+- Ten local application/policy/promotion tests pass; lint passes; Kustomize renders successfully.
 - Official checksums verified for local GitHub CLI, Gitleaks, Trivy and kubectl downloads.
 - Public repository created; hosted gates execute and block releases on findings.
 - k3s v1.37.1+k3s1 and both Flux v2.9.6 controllers are healthy.
@@ -46,8 +49,14 @@ Repository changes use protected pull requests; ongoing maintenance remains trac
 
 ## Ongoing maintenance
 
-Review the open dependency update PR and the three exceptions before 2026-11-22.
+Gunicorn 26.2.0 passed refreshed pull-request and main gates, was merged and verified live.
+Review the three exceptions before 2026-11-22.
 Off-host backups, scheduled rescanning and signed-image admission are optional next enhancements,
-not claims made by this version. The Wazuh and application VMs remain running for demonstration.
+not claims made by this version. VMware reported zero running VMs at 15:54:49 UTC after
+guest shutdown. The shared Ubuntu n8n workload is paused with its VM; its data was preserved.
+The final documentation/evidence publication occurs after shutdown, so any newer approved
+release is expected to reconcile on the next start. See FINAL_REPORT.md and OPERATIONS.md.
+A rebuild on a completely fresh operating-system VM and a recorded video walkthrough have
+not been performed; the written bootstrap and demonstration runbooks describe the procedure.
 
 See [BACKLOG.md](BACKLOG.md), [DECISIONS.md](DECISIONS.md), and [VALIDATION.md](VALIDATION.md).
