@@ -10,6 +10,14 @@ env:
     failOnWarning: true
     progressToStdout: true
 jobs:
+  - type: alertFilter
+    alertFilters:
+      # EX-002: isolated disposable Docker network; no host ports or real credentials.
+      - ruleId: 10106
+        newRisk: Info
+        context: release-inventory
+        url: '^http://app:8080(?:/.*)?$'
+        urlRegex: true
   - type: requestor
     parameters:
       user: ''

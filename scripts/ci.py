@@ -316,6 +316,10 @@ def main():
             ],
         ),
     )
+    gate(
+        "scanner-negative-tests",
+        lambda: run(["uv", "run", "--locked", "python", "scripts/negative_tests.py"]),
+    )
     built = gate(
         "container-build",
         lambda: run(

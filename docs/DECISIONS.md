@@ -39,3 +39,16 @@ Accepted 2026-10-23. A loopback-only API binding broke Kubernetes Service routin
 agent connections. Use the default binding on the isolated NAT VM, without a router port forward
 or public ingress. Kubernetes components need API reachability; loopback-only binding is not
 a valid isolation mechanism for this cluster. kubeconfig remains mode 0600.
+
+## ADR-009 — Isolated CI transport exception
+
+Accepted 2026-10-23. ZAP's only finding in the second run was rule 10106, HTTP Only Site.
+Retain it as informational for exactly http://app:8080 in the ephemeral Docker test context,
+with no published ports or durable credentials. EX-002 expires 2026-11-22. Other targets
+remain subject to the normal threshold; a future public ingress must use TLS.
+
+## ADR-010 — Separate platform bootstrap from application reconciliation
+
+Accepted 2026-10-23. A platform administrator creates the Restricted namespace and Flux
+RBAC. Flux applies application resources using an impersonated namespace-scoped identity
+that cannot read secrets, alter RBAC, create namespaces, or deploy outside the namespace.

@@ -33,3 +33,11 @@ Checksum-verified k3s v1.37.1+k3s1 installed on the approved Ubuntu VM. Node is 
 CoreDNS, metrics-server and local-path-provisioner are Running after correcting API binding.
 Existing n8n container remained running. Secrets encryption enabled; kubeconfig mode 0600.
 Traefik and ServiceLB disabled. Application and Flux are not yet deployed.
+
+## Second hosted run
+
+[Run 39962842540](https://github.com/benalifathia08-source/secure-delivery/actions/runs/39962842540)
+passed all static gates, container build and Trivy image scan. The candidate ran as non-root
+with a read-only root, reached PostgreSQL, and its database role was denied INSERT.
+ZAP completed active/passive scans and produced HTML/JSON reports; HTTP-only on the isolated
+test address was the sole Medium finding. Release remained blocked pending scoped EX-002.

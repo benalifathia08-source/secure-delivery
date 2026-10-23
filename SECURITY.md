@@ -15,8 +15,10 @@
 Low ZAP findings remain visible in reports. Checkov is intentionally a selected baseline,
 not a claim of passing every policy. See `.checkov.yaml` for exact policy IDs.
 
-The one current exception permits PostgreSQL's official non-root UID 70 for CKV_K8S_40;
-it is scoped to that StatefulSet and expires 2026-11-22. `security/exceptions.json` is the review ledger,
+EX-001 permits PostgreSQL's official non-root UID 70 for CKV_K8S_40, scoped to that StatefulSet.
+EX-002 retains HTTP-only as informational only for the isolated disposable CI target
+`http://app:8080`; it does not exempt any external endpoint from TLS.
+Both expire 2026-11-22. `security/exceptions.json` is the review ledger,
 not an automatic suppression mechanism. A future exception must identify its tool, finding,
 scope, reason, owner and expiry, and be applied explicitly in the relevant scanner configuration.
 Expired exceptions fail repository policy. Never use broad blanket suppressions.

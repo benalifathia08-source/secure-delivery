@@ -7,9 +7,9 @@ Updated: 2026-10-23 (Africa/Tunis).
 | Milestone | State | Completion evidence required |
 |---|---|---|
 | M0 — Inventory and architecture | Complete | SSH verified, 24 GiB host, Linux resources and existing workloads inspected |
-| M1 — Application and database | In progress | Unit tests, real PostgreSQL integration, container smoke test |
+| M1 — Application and database | Complete | Hosted container startup, PostgreSQL readiness and SELECT-only role verified |
 | M2 — Security gates | In progress | Local Gitleaks and Trivy configuration pass; hosted integration pending |
-| M3 — k3s and Flux delivery | Planned | Immutable digest promotion, live rollout, network tests, rollback |
+| M3 — k3s and Flux delivery | In progress | k3s healthy; Flux installation and first approved promotion pending |
 | M4 — Falco and Wazuh | Planned | Controlled trigger, decoded alert, dashboard evidence |
 | M5 — Portfolio release | Planned | Published GitHub repository, protected branch, complete evidence |
 
