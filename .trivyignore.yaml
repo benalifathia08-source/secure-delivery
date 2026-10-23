@@ -1,8 +1,0 @@
-misconfigurations:
-  - id: KSV-0056
-    paths:
-      - deploy/platform/flux-rbac.yaml
-      - /src/deploy/platform/flux-rbac.yaml
-      - flux-rbac.yaml
-    expired_at: 2026-11-22
-    statement: EX-003. Flux must manage application Services and NetworkPolicies only in secure-delivery. No cluster-wide networking permission is granted.
