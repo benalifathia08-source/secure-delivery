@@ -1,0 +1,7 @@
+{
+  "time": "2026-10-23T14:51:27.947113+00:00",
+  "application_version": "0.1.1",
+  "configured_image": "ghcr.io/benalifathia08-source/secure-delivery@sha256:5adb19956ef559ba44279b27d035a072db3cf8e241bd08d529f6ff0a737966e3",
+  "runtime_image_id": "ghcr.io/benalifathia08-source/secure-delivery@sha256:5adb19956ef559ba44279b27d035a072db3cf8e241bd08d529f6ff0a737966e3",
+  "ready": true
+}

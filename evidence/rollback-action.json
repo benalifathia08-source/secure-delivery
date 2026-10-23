@@ -1,0 +1,6 @@
+{
+  "from_release": "2fe342a45baa2110f2af30b2c8d7e5dd58964737",
+  "restored_release": "7cbb4cfe1481a847ee4a86b1c98c597b868e4c4c",
+  "rollback_commit": "9969171704c55d1f2bc5bd10259733c4181d59aa",
+  "image": "ghcr.io/benalifathia08-source/secure-delivery@sha256:f8464675010e2b99a76fdca03717e574265e12110375a64941404a1ea36d9479"
+}

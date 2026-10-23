@@ -2,18 +2,17 @@
 
 Updated: 2026-10-23 (Africa/Tunis).
 
-**State: hosted release gates under verification; k3s, Flux and runtime detection operational.
-Application and database are healthy; network isolation and Wazuh indexing are verified.
-Recovery demonstration and final repository protection are in progress.**
+**State: initial project scope complete and verified. Application version 0.1.1 is healthy.
+Repository changes use protected pull requests; ongoing maintenance remains tracked below.**
 
 | Milestone | State | Completion evidence required |
 |---|---|---|
 | M0 — Inventory and architecture | Complete | SSH verified, 24 GiB host, Linux resources and existing workloads inspected |
 | M1 — Application and database | Complete | Hosted container startup, PostgreSQL readiness and SELECT-only role verified |
 | M2 — Security gates | Complete | Hosted run 39967961637 passed all gates, including real negative fixtures |
-| M3 — k3s and Flux delivery | In progress | k3s healthy; Flux installation and first approved promotion pending |
+| M3 — k3s and Flux delivery | Complete | Dual-image rollout, admission/RBAC/network tests and durable GitOps rollback verified |
 | M4 — Falco and Wazuh | Complete | Runtime and application events verified in Wazuh indexer over validated TLS |
-| M5 — Portfolio release | Planned | Published GitHub repository, protected branch, complete evidence |
+| M5 — Portfolio release | Complete | Public repository, required verify check, admin-enforced protection, runbooks and sanitized evidence |
 
 ## Inventory
 
@@ -39,5 +38,16 @@ Recovery demonstration and final repository protection are in progress.**
 - PostgreSQL backup restored into a disposable database with the expected release inventory.
 - Database-image scanning identified vulnerable unused gosu; a non-root derived image now
   removes that executable and is included in the same scan/test/promotion flow.
+- Ten application/policy/promotion unit tests pass; all sixteen hosted gate stages passed.
+- The deliberately insecure PR was rejected and closed without merging.
+- GitOps rollback restored 0.1.0 from 0.1.1; restoring the current approved release returned 0.1.1.
+- Main requires an up-to-date successful verify check and a pull request, including for admins;
+  force pushes and deletion are disabled. No additional human approval is required in this solo lab.
+
+## Ongoing maintenance
+
+Review the open dependency update PR and the three exceptions before 2026-11-22.
+Off-host backups, scheduled rescanning and signed-image admission are optional next enhancements,
+not claims made by this version. The Wazuh and application VMs remain running for demonstration.
 
 See [BACKLOG.md](BACKLOG.md), [DECISIONS.md](DECISIONS.md), and [VALIDATION.md](VALIDATION.md).
