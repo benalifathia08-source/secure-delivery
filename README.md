@@ -3,9 +3,27 @@
 A local Kubernetes security lab that gates application releases, limits workload privileges,
 and connects runtime detection to an existing Wazuh SOC lab.
 
-**Work in progress.** Configuration is not evidence of enforcement. See the
-[current status](docs/STATUS.md), [living backlog](docs/BACKLOG.md), and
-[validation ledger](docs/VALIDATION.md) for what has actually been executed.
+[![Security delivery](https://github.com/benalifathia08-source/secure-delivery/actions/workflows/security.yaml/badge.svg?branch=main)](https://github.com/benalifathia08-source/secure-delivery/actions/workflows/security.yaml)
+
+**Verified on local hardware.** The delivery pipeline, workload restrictions, network isolation,
+runtime detection, Wazuh indexing, database restore and GitOps rollback have been executed.
+See the [status](docs/STATUS.md), [living backlog](docs/BACKLOG.md), and
+[validation ledger](docs/VALIDATION.md) for exact scope and observed results.
+
+## Demonstration results
+
+| Demonstration | Observed result |
+|---|---|
+| Clean candidate | [Hosted gates passed](https://github.com/benalifathia08-source/secure-delivery/actions/runs/39972006316); both images promoted by digest |
+| Synthetic credential and privileged manifest | [Demonstration PR rejected](https://github.com/benalifathia08-source/secure-delivery/pull/2), then closed without merging |
+| Pod security and permissions | [Privileged pod and excess reconciler access denied](evidence/admission-rbac-runtime.json) |
+| Network isolation | [Authorized client succeeded; unauthorized client blocked](evidence/network-isolation.json) |
+| Runtime detection | [Falco canary alert reached Wazuh](evidence/runtime-detection.json), level 10 |
+| Centralized telemetry | [Runtime and application events indexed](evidence/indexed-alerts.json) |
+| Recovery | [Database restore tested](evidence/backup-restore.json); [0.1.1 → 0.1.0 rollback](evidence/release-after-rollback.json), then [0.1.1 restored](evidence/release-restored-current.json) |
+
+The runtime canary is a controlled sensitive-file-access simulation. Three narrow, expiring
+exceptions are documented in [SECURITY.md](SECURITY.md); no vulnerability suppression is used.
 
 ## Architecture
 
@@ -65,6 +83,9 @@ application sentinel image from main.
 - [Threat model](docs/THREAT_MODEL.md) — assumptions and limits.
 - [Operations](docs/OPERATIONS.md) — bootstrap, verification and rollback.
 - [Security policy](SECURITY.md) — gates, exceptions and reporting.
+- [Environment](docs/ENVIRONMENT.md) — verified software and resource inventory.
+- [Evidence index](evidence/README.md) — sanitized results and provenance.
+- [Primary references](docs/SOURCES.md) — upstream documentation.
 
 This project demonstrates cloud-native security on local hardware. It does not claim a
 production cloud deployment, high availability, or protection against a cluster administrator.

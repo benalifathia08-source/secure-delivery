@@ -26,7 +26,8 @@ as potentially hostile. GitHub-hosted CI and the local lab are separate trust do
 - Falco alerting is detection, not automatic containment. Sensor privileges are separate from
   the application namespace.
 - Local PostgreSQL storage is single-node and not highly available. Image rollback does not
-  reverse schema changes or restore data. Backups and restore tests are separate acceptance work.
+  reverse schema changes or restore data. On-demand backup/restore was tested; off-host backup
+  retention and complete VM-loss recovery remain future work.
 - Flux is a reconciler, not a security scanner. The watched branch must receive only approved
   configuration, and its reconciliation identity must be namespace-scoped.
 - The first version exposes no public ingress. Local demonstration access uses port forwarding.
