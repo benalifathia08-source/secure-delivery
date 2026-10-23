@@ -1,0 +1,42 @@
+{
+  "time": "2026-10-23T15:53:25.142549+00:00",
+  "application": {
+    "version": "0.1.1",
+    "gunicorn": "26.2.0",
+    "readiness": 200
+  },
+  "services": {
+    "k3s": "active",
+    "falco": "active",
+    "secure-delivery-logs": "active",
+    "wazuh-agent": "active",
+    "docker": "active"
+  },
+  "flux": {
+    "gitrepository": {
+      "ready": true,
+      "revision": "lab-release@sha1:35002860fee06aff4d06285ed087e7ec52289726"
+    },
+    "kustomization": {
+      "ready": true,
+      "revision": "lab-release@sha1:35002860fee06aff4d06285ed087e7ec52289726"
+    }
+  },
+  "images": [
+    {
+      "workload": "app",
+      "configured_image": "ghcr.io/benalifathia08-source/secure-delivery@sha256:df5a91ee7a03409eb4f24b3a50697047a00b92e1b45ca2ef8551a3be80f93c6a",
+      "runtime_image_id": "ghcr.io/benalifathia08-source/secure-delivery@sha256:df5a91ee7a03409eb4f24b3a50697047a00b92e1b45ca2ef8551a3be80f93c6a",
+      "ready": true
+    },
+    {
+      "workload": "postgres",
+      "configured_image": "ghcr.io/benalifathia08-source/secure-delivery-database@sha256:c059a2a38aba66df429a57198af6bf48b237b0fb27c81217b03f291964a4f8d7",
+      "runtime_image_id": "ghcr.io/benalifathia08-source/secure-delivery-database@sha256:c059a2a38aba66df429a57198af6bf48b237b0fb27c81217b03f291964a4f8d7",
+      "ready": true
+    }
+  ],
+  "temporary_restore_databases": 0,
+  "demonstration_resources_removed": true,
+  "existing_n8n_running": true
+}

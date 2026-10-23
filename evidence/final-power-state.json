@@ -1,0 +1,13 @@
+{
+  "observed_at_utc": "2026-10-23T15:54:49Z",
+  "method": "Guest operating-system shutdown over authorized SSH",
+  "lab_vms": [
+    "Ubuntu application lab",
+    "Wazuh SOC lab"
+  ],
+  "graceful_shutdown_requested": true,
+  "vmware_running_vm_count": 0,
+  "forced_power_off_used": false,
+  "shared_n8n_workload_paused": true,
+  "disks_and_backups_preserved": true
+}

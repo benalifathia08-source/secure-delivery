@@ -30,7 +30,9 @@ Align the builder and runtime virtual-environment paths so executable shebangs r
 ## ADR-007 — Scoped PostgreSQL identity exception
 
 Accepted 2026-10-23. Official PostgreSQL Alpine uses UID 70. Retain the vendor non-root identity
-and all other restrictions instead of maintaining a custom database image just to change its UID.
+and all other restrictions. The later derived image removes an unused executable while retaining
+that upstream identity. Changing the UID also requires reviewing initdb identity lookup and
+persistent-volume ownership; raising a numeric UID alone does not improve this lab's isolation.
 Record EX-001 for CKV_K8S_40 only, expiring 2026-11-22. This does not waive root or privileged execution.
 
 ## ADR-008 — Private VM network, cluster-reachable API
@@ -94,3 +96,16 @@ Accepted 2026-10-23. Scan the full history reachable from checked-out HEAD, plus
 Scanning every fetched branch lets an unmerged demonstration or untrusted branch block a clean
 main release. Pull-request HEAD includes its proposed ancestry; main still scans all history
 that can reach deployment. A real leaked credential must be revoked even if later removed.
+
+## ADR-017 — Reviewed dependency update and bounded handoff
+
+Accepted 2026-10-23. Review Gunicorn 26.2.0's upstream release notes and the exact Dependabot
+diff, refresh PR #1 against protected main, and require the complete security/integration
+suite before merging. Keep the existing gthread server settings; do not enable the new
+cleartext HTTP/2 feature. Verify the installed dependency in the running approved image.
+[Upstream release](https://github.com/benoitc/gunicorn/releases/tag/26.2.0).
+
+Close the original scope with repeatable written demonstrations, recovery evidence and a
+graceful lab shutdown. A fresh operating-system VM rebuild, recorded video, off-host disaster
+recovery, scheduled rescans and image signing remain explicitly outside the verified scope.
+These are future enhancements, not reasons to describe the completed lab as a production system.

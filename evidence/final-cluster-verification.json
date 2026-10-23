@@ -1,0 +1,10 @@
+{
+  "time": "2026-10-23T15:52:39.037262+00:00",
+  "checks": {
+    "privileged_pod_rejected": true,
+    "reconciler_privilege_boundaries": true,
+    "authorized_connection_succeeds": true,
+    "unauthorized_connection_blocked": true,
+    "runtime_canary_triggered": true
+  }
+}

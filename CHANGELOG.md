@@ -1,5 +1,13 @@
 # Changelog
 
+## Handoff — 2026-10-23
+
+- Reviewed Gunicorn 26.2.0 update, full PR/main gates and live deployment verification.
+- Repeated admission, RBAC, networking, runtime telemetry and backup/restore checks.
+- Reconciled historical status notes and clarified the retained PostgreSQL identity exception.
+- Added a written demonstration, startup/shutdown instructions and final completion report.
+- Preserved sanitized final evidence and gracefully shut down both lab VMs.
+
 ## 0.1.1 — 2026-10-23
 
 - Flask release inventory and PostgreSQL with a SELECT-only application identity.

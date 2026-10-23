@@ -78,10 +78,12 @@ application sentinel image from main.
 ## Project documentation
 
 - [Backlog](docs/BACKLOG.md) — milestones, features and acceptance criteria.
+- [Completion report](docs/FINAL_REPORT.md) — delivery, final checks, handoff and remaining maintenance.
 - [Decisions](docs/DECISIONS.md) — choices and tradeoffs.
 - [Validation](docs/VALIDATION.md) — observed results and pending checks.
 - [Threat model](docs/THREAT_MODEL.md) — assumptions and limits.
 - [Operations](docs/OPERATIONS.md) — bootstrap, verification and rollback.
+- [Demonstration guide](docs/DEMO.md) — interview walkthrough and evidence to show.
 - [Security policy](SECURITY.md) — gates, exceptions and reporting.
 - [Environment](docs/ENVIRONMENT.md) — verified software and resource inventory.
 - [Evidence index](evidence/README.md) — sanitized results and provenance.
