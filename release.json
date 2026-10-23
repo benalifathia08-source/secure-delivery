@@ -1,6 +1,6 @@
 {
-  "source_commit": "b8c9aa46923d72edd754f915ff478b6f2bcc7abd",
-  "image": "ghcr.io/benalifathia08-source/secure-delivery@sha256:5adb19956ef559ba44279b27d035a072db3cf8e241bd08d529f6ff0a737966e3",
-  "database_image": "ghcr.io/benalifathia08-source/secure-delivery-database@sha256:3a238f97a5811dd256640917f57117dddb3dcd1c26691adde77bca1ca1ad5ea6",
-  "run": "39972006316"
+  "source_commit": "322afdf7da9516818112809bab78433703388a7c",
+  "image": "ghcr.io/benalifathia08-source/secure-delivery@sha256:5f27d127da6670a64f7c37623e59a748ccce5418a39bd43ad5e67ebdfafad3de",
+  "database_image": "ghcr.io/benalifathia08-source/secure-delivery-database@sha256:fc6396605532e3fef2f87598fa8dbaee62bd49ea3c12a4075c992681df9cc117",
+  "run": "39976527157"
 }
