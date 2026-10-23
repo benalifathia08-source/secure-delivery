@@ -1,0 +1,12 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Local downloaded tools, dependencies and generated reports are not source"
+paths = ['''(^|/)\.tools/''', '''(^|/)\.venv/''', '''(^|/)reports/''', '''(^|/)\.local/''']
+
+[[rules]]
+id = "lab-fake-credential"
+description = "Synthetic credential used by the negative security demonstration"
+regex = '''LAB_FAKE_CREDENTIAL_[A-Z0-9]{24}'''
+keywords = ["LAB_FAKE_CREDENTIAL_"]
