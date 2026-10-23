@@ -10,7 +10,7 @@ Updated: 2026-10-23 (Africa/Tunis).
 | M1 — Application and database | Complete | Hosted container startup, PostgreSQL readiness and SELECT-only role verified |
 | M2 — Security gates | In progress | Local Gitleaks and Trivy configuration pass; hosted integration pending |
 | M3 — k3s and Flux delivery | In progress | k3s healthy; Flux installation and first approved promotion pending |
-| M4 — Falco and Wazuh | Planned | Controlled trigger, decoded alert, dashboard evidence |
+| M4 — Falco and Wazuh | In progress | Falco 0.45.1 active with modern eBPF; Wazuh rules and collection being configured |
 | M5 — Portfolio release | Planned | Published GitHub repository, protected branch, complete evidence |
 
 ## Inventory
@@ -27,5 +27,9 @@ Updated: 2026-10-23 (Africa/Tunis).
 - Local dependency tooling is installed under ignored `.tools/`.
 - Eight local application/policy tests pass; lint passes; Kustomize renders successfully.
 - Official checksums verified for local GitHub CLI, Gitleaks, Trivy and kubectl downloads.
+- Public repository created; hosted gates execute and block releases on findings.
+- k3s v1.37.1+k3s1 and both Flux v2.9.6 controllers are healthy.
+- Wazuh manager, indexer and dashboard are active; manager reports 4.14.8.
+- Falco 0.45.1 installed from its signed repository; modern eBPF and JSON output active.
 
 See [BACKLOG.md](BACKLOG.md), [DECISIONS.md](DECISIONS.md), and [VALIDATION.md](VALIDATION.md).

@@ -1,0 +1,22 @@
+<group name="secure_delivery,">
+  <rule id="112300" level="10">
+    <decoded_as>json</decoded_as>
+    <field name="rule">^Secure Delivery Canary Read$</field>
+    <description>Falco: controlled container sensitive-file-access simulation</description>
+    <mitre><id>T1552</id></mitre>
+    <group>falco,runtime_detection,</group>
+  </rule>
+  <rule id="112301" level="3">
+    <decoded_as>json</decoded_as>
+    <field name="event">^http_request$</field>
+    <field name="service">^secure-delivery$</field>
+    <description>Secure delivery application HTTP event</description>
+    <group>application,</group>
+  </rule>
+  <rule id="112302" level="6">
+    <if_sid>112301</if_sid>
+    <field name="status" type="pcre2">^5\d\d$</field>
+    <description>Secure delivery application server error</description>
+    <group>application_error,</group>
+  </rule>
+</group>

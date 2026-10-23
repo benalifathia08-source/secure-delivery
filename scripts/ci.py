@@ -225,6 +225,7 @@ def main():
     REPORTS.mkdir(exist_ok=True)
     REPORTS.chmod(0o777)  # ZAP uses a non-root identity in a disposable runner. noqa: S103
     candidate = "secure-delivery:ci"
+    gate("render-manifests", lambda: run(["uv", "run", "--locked", "python", "scripts/render.py"]))
     gate("application-tests", lambda: run(["uv", "run", "--locked", "pytest", "-q"]))
     gate("lint", lambda: run(["uv", "run", "--locked", "ruff", "check", "."]))
     gate("repository-policy", lambda: run(["uv", "run", "--locked", "python", "scripts/policy.py"]))
@@ -295,7 +296,7 @@ def main():
                 "json",
                 "--output",
                 "/reports/trivy-config.json",
-                "/src/deploy",
+                "/reports/rendered.yaml",
             ],
         ),
     )
@@ -304,8 +305,8 @@ def main():
         lambda: scanner(
             "checkov",
             [
-                "-d",
-                "/src/deploy",
+                "-f",
+                "/reports/rendered.yaml",
                 "--config-file",
                 "/src/.checkov.yaml",
                 "--compact",
@@ -313,6 +314,47 @@ def main():
                 "json",
                 "--output-file-path",
                 "/reports",
+            ],
+        ),
+    )
+    gate(
+        "trivy-platform",
+        lambda: scanner(
+            "trivy",
+            [
+                "config",
+                "--severity",
+                "HIGH,CRITICAL",
+                "--exit-code",
+                "1",
+                "--ignorefile",
+                "/src/.trivyignore.yaml",
+                "--show-suppressed",
+                "--format",
+                "json",
+                "--output",
+                "/reports/trivy-platform.json",
+                "/src/deploy/platform",
+            ],
+        ),
+    )
+    gate(
+        "trivy-database-image",
+        lambda: scanner(
+            "trivy",
+            [
+                "image",
+                "--scanners",
+                "vuln",
+                "--severity",
+                "HIGH,CRITICAL",
+                "--exit-code",
+                "1",
+                "--format",
+                "json",
+                "--output",
+                "/reports/trivy-database.json",
+                image("postgres"),
             ],
         ),
     )

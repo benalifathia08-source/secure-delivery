@@ -16,5 +16,14 @@
     "reason": "The candidate is tested on an ephemeral Docker bridge with no published host ports and generated disposable credentials. HTTP-only remains informational in the report. This exception does not apply to public ingress, other URLs, or future external environments, which require TLS.",
     "owner": "benalifathia08-source",
     "expires": "2026-11-22"
+  },
+  {
+    "id": "EX-003",
+    "tool": "trivy",
+    "finding": "KSV-0056",
+    "scope": "deploy/platform/flux-rbac.yaml: Role/app-reconciler in secure-delivery only",
+    "reason": "Flux needs to reconcile the application's Services and NetworkPolicies. This identity is namespace-scoped, cannot modify RBAC or namespaces, and cannot read Secrets. It has no cluster-wide networking permissions. Platform RBAC is still scanned; this specific necessary capability is reviewed explicitly.",
+    "owner": "benalifathia08-source",
+    "expires": "2026-11-22"
   }
 ]

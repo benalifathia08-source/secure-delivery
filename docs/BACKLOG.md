@@ -12,9 +12,9 @@ Update this file and STATUS.md whenever a feature, milestone, decision, or block
 | B06 | P0 | k3s isolation and enforcement | In progress | Cluster healthy; application policy enforcement tests pending |
 | B07 | P0 | Flux release promotion | Planned | Only tested digest enters watched release configuration |
 | B08 | P0 | Health and rollback procedures | Planned | Git rollback demonstrated; database limitations documented |
-| B09 | P1 | Falco JSON collection in Wazuh | Planned | Controlled runtime alert searchable in Wazuh |
-| B10 | P1 | Application security logs in Wazuh | Planned | Sanitized HTTP event searchable in Wazuh |
+| B09 | P1 | Falco JSON collection in Wazuh | In progress | Sensor active; collection/rules being enabled; live trigger pending |
+| B10 | P1 | Application security logs in Wazuh | In progress | Whitelisted JSON collector implemented; live ingestion pending |
 | B11 | P0 | Publish complete GitHub repository | In progress | Authentication recovered; initial publication next |
 | B12 | P1 | Reproducible negative demonstrations | In progress | Real scanner fixtures implemented; hosted execution pending |
-| B13 | P1 | Exceptions and maintenance | Planned | Narrow exceptions expire; pinned dependencies updated |
+| B13 | P1 | Exceptions and maintenance | In progress | Three scoped expiring exceptions; Dependabot enabled; rendered manifests now scanned |
 | B14 | P1 | Portfolio documentation and evidence | In progress | No unexecuted claims; sanitized evidence accompanies results |

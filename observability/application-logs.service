@@ -1,0 +1,20 @@
+[Unit]
+Description=Collect selected secure-delivery application JSON events
+After=k3s.service
+Requires=k3s.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /opt/secure-delivery/collect_app_logs.py
+Restart=on-failure
+RestartSec=15
+User=root
+UMask=0027
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/log/secure-delivery
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

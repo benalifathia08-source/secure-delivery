@@ -16,7 +16,7 @@ def reject(tool, folder, args):
             "run",
             "--rm",
             "-v",
-            f"{folder}:/fixture:ro",
+            f"{folder}:/fixture:rw",
             "-v",
             f"{ROOT}:/src:ro",
             LOCK["images"][tool]["pinned"],
@@ -26,6 +26,20 @@ def reject(tool, folder, args):
     )
     if result.returncode != 1:
         raise RuntimeError(f"{tool} negative test did not return finding exit code 1")
+    if tool == "gitleaks":
+        findings = json.loads((Path(folder) / "gitleaks.json").read_text())
+        detected = any(item["RuleID"] == "lab-fake-credential" for item in findings)
+    elif tool == "trivy":
+        findings = json.loads(result.stdout)
+        detected = any(r.get("Misconfigurations") for r in findings.get("Results", []))
+    else:
+        findings = json.loads(result.stdout)
+        detected = any(
+            item["check_id"] == "CKV_K8S_20"
+            for item in findings.get("results", {}).get("failed_checks", [])
+        )
+    if not detected:
+        raise RuntimeError(f"{tool} did not report the expected synthetic finding")
     return {"tool": tool, "expected": "reject", "exit_code": result.returncode}
 
 
@@ -43,12 +57,32 @@ def main():
             reject(
                 "gitleaks",
                 fixture,
-                ["dir", "/fixture", "--config", "/src/.gitleaks.toml", "--redact", "--no-banner"],
+                [
+                    "dir",
+                    "/fixture",
+                    "--config",
+                    "/src/.gitleaks.toml",
+                    "--redact",
+                    "--no-banner",
+                    "--report-format",
+                    "json",
+                    "--report-path",
+                    "/fixture/gitleaks.json",
+                ],
             ),
             reject(
                 "trivy",
                 fixture,
-                ["config", "/fixture", "--severity", "HIGH,CRITICAL", "--exit-code", "1"],
+                [
+                    "config",
+                    "/fixture",
+                    "--severity",
+                    "HIGH,CRITICAL",
+                    "--exit-code",
+                    "1",
+                    "--format",
+                    "json",
+                ],
             ),
             reject(
                 "checkov",
@@ -61,6 +95,8 @@ def main():
                     "--check",
                     "CKV_K8S_20",
                     "--compact",
+                    "-o",
+                    "json",
                 ],
             ),
         ]

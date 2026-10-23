@@ -52,3 +52,17 @@ remain subject to the normal threshold; a future public ingress must use TLS.
 Accepted 2026-10-23. A platform administrator creates the Restricted namespace and Flux
 RBAC. Flux applies application resources using an impersonated namespace-scoped identity
 that cannot read secrets, alter RBAC, create namespaces, or deploy outside the namespace.
+
+## ADR-011 — Review necessary networking reconciliation privilege
+
+Accepted 2026-10-23. Trivy KSV-0056 correctly identifies that Flux can change Services and
+NetworkPolicies. This is required for delivery but limited to the application namespace.
+EX-003 expires 2026-11-22 and applies only to this Role file. Scan both platform manifests
+and final rendered application manifests so overlays cannot bypass configuration checks.
+
+## ADR-012 — Selected application log forwarding
+
+Accepted 2026-10-23. A host collector reads recent application pod logs, selects only known
+HTTP event fields, deduplicates request IDs in bounded memory, and writes JSON for the Wazuh
+agent. It does not forward arbitrary pod output, request data, or database credentials.
+This lab collector polls every 15 seconds and is not a lossless production logging system.

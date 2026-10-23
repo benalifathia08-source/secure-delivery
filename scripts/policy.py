@@ -12,6 +12,11 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def violations(root=ROOT):
     errors = []
+    for path in (root / "deploy").rglob("kustomization.yaml"):
+        config = yaml.safe_load(path.read_text())
+        for resource in config.get("resources", []) + config.get("bases", []):
+            if "://" in resource or resource.startswith(("git@", "/")):
+                errors.append(f"{path.name}: external Kustomize resource forbidden")
     for path in (root / ".github/workflows").glob("*.y*ml"):
         content = path.read_text()
         for action in re.findall(r"uses:\s*([^\s#]+)", content):

@@ -1,0 +1,10 @@
+<ossec_config>
+  <localfile>
+    <log_format>json</log_format>
+    <location>/var/log/falco/secure-delivery.jsonl</location>
+  </localfile>
+  <localfile>
+    <log_format>json</log_format>
+    <location>/var/log/secure-delivery/application.jsonl</location>
+  </localfile>
+</ossec_config>

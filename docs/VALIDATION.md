@@ -41,3 +41,15 @@ passed all static gates, container build and Trivy image scan. The candidate ran
 with a read-only root, reached PostgreSQL, and its database role was denied INSERT.
 ZAP completed active/passive scans and produced HTML/JSON reports; HTTP-only on the isolated
 test address was the sole Medium finding. Release remained blocked pending scoped EX-002.
+
+## Runtime sensor and collection preparation
+
+Falco 0.45.1 was installed through its signed APT repository after verifying the current
+signing-key fingerprint. Modern eBPF is active on kernel 6.8; the canary rule and JSON output
+configuration validate. Automatic rule-following is disabled for reproducibility.
+The package manager briefly restarted the existing Sysmon service; its configuration was
+not changed. Subsequent bootstrap runs request list-only handling of unrelated service restarts.
+Application log collector is active. End-to-end Wazuh events are not yet verified.
+
+The third hosted run completed ZAP successfully but rejected platform networking reconciliation
+permissions. EX-003 documents that required, namespace-scoped controller privilege.
