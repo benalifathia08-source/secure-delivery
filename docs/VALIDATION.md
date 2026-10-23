@@ -85,3 +85,24 @@ Both rules 112300 (runtime) and 112301 (application) were present.
 A PostgreSQL custom-format backup was stored locally with mode 0600 and restored into a uniquely
 named disposable database. The restored inventory contained the expected data; the temporary
 database was removed. [Restore evidence](../evidence/backup-restore.json).
+
+## Rejected change and recovery demonstration
+
+[PR #2](https://github.com/benalifathia08-source/secure-delivery/pull/2) introduced a deliberately
+synthetic, nonfunctional credential and a privileged workload change. Its
+[run 39972343014](https://github.com/benalifathia08-source/secure-delivery/actions/runs/39972343014)
+failed the expected secret/configuration gates; promotion was skipped. The PR was closed
+without merging. [Sanitized gate results](../evidence/rejected-demo.json).
+
+[Run 39972006316](https://github.com/benalifathia08-source/secure-delivery/actions/runs/39972006316)
+published version 0.1.1. Its configured digest matched the runtime image ID. The rollback
+script restored a previously approved release through a new Git commit, and Flux returned
+the application to 0.1.0 with matching runtime digest. Restoring the current approved release
+returned the application to 0.1.1. See [before](../evidence/release-before-rollback.json),
+[rollback action](../evidence/rollback-action.json), [after](../evidence/release-after-rollback.json),
+and [restored current](../evidence/release-restored-current.json).
+
+Main branch protection was applied through GitHub's API and read back: verify is bound to
+the GitHub Actions app, strict up-to-date checks and pull requests are required, admin
+enforcement is enabled, and force pushes/deletion are disabled. Solo-lab approval count is zero.
+Dependency vulnerability alerts are enabled. No public self-hosted runner or paid service was used.

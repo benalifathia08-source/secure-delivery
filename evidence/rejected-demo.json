@@ -1,0 +1,92 @@
+{
+  "source_commit": "7976692f967e2b1dc1dbe54728407a59b76947d2",
+  "gates": [
+    {
+      "gate": "render-manifests",
+      "passed": true,
+      "seconds": 0.53
+    },
+    {
+      "gate": "application-tests",
+      "passed": false,
+      "error": "CalledProcessError",
+      "seconds": 1.46
+    },
+    {
+      "gate": "lint",
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "gate": "repository-policy",
+      "passed": false,
+      "error": "CalledProcessError",
+      "seconds": 0.05
+    },
+    {
+      "gate": "gitleaks-history",
+      "passed": false,
+      "error": "CalledProcessError",
+      "seconds": 4.33
+    },
+    {
+      "gate": "gitleaks-worktree",
+      "passed": false,
+      "error": "CalledProcessError",
+      "seconds": 0.2
+    },
+    {
+      "gate": "trivy-dependencies",
+      "passed": true,
+      "seconds": 15.59
+    },
+    {
+      "gate": "trivy-config",
+      "passed": false,
+      "error": "CalledProcessError",
+      "seconds": 1.78
+    },
+    {
+      "gate": "checkov",
+      "passed": false,
+      "error": "CalledProcessError",
+      "seconds": 16.39
+    },
+    {
+      "gate": "trivy-platform",
+      "passed": true,
+      "seconds": 1.42
+    },
+    {
+      "gate": "database-build",
+      "passed": true,
+      "seconds": 7.14
+    },
+    {
+      "gate": "trivy-database-image",
+      "passed": true,
+      "seconds": 13.39
+    },
+    {
+      "gate": "scanner-negative-tests",
+      "passed": true,
+      "seconds": 7.81
+    },
+    {
+      "gate": "container-build",
+      "passed": true,
+      "seconds": 2.84
+    },
+    {
+      "gate": "trivy-image",
+      "passed": true,
+      "seconds": 13.2
+    },
+    {
+      "gate": "integration-and-zap",
+      "passed": true,
+      "seconds": 154.83
+    }
+  ],
+  "passed": false
+}
