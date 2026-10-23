@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+root="$(cd "$(dirname "$0")/.." && pwd)"
 version='v2.9.6'
 workdir="$HOME/.local/share/secure-delivery-bootstrap/flux"
 mkdir -p "$workdir"
@@ -14,7 +15,9 @@ test -s archive.sha256
 sha256sum --check archive.sha256
 tar -xzf "$archive" flux
 sudo install -m 0755 flux /usr/local/bin/flux
-sudo env KUBECONFIG=/etc/rancher/k3s/k3s.yaml flux install --components=source-controller,kustomize-controller \
-  --watch-all-namespaces=false --network-policy=true
+flux install --components=source-controller,kustomize-controller \
+  --watch-all-namespaces=false --network-policy=true --export > generated.yaml
+python3 "$root/scripts/pin_flux.py" < generated.yaml > pinned.yaml
+sudo k3s kubectl apply -f pinned.yaml
 sudo k3s kubectl -n flux-system rollout status deployment/source-controller --timeout=180s
 sudo k3s kubectl -n flux-system rollout status deployment/kustomize-controller --timeout=180s

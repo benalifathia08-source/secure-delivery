@@ -75,9 +75,13 @@ def main():
     }.items():
         images[name] = {"source": reference, "pinned": image_pin(reference)}
         print("Resolved", name)
-    (ROOT / "tools.lock.json").write_text(
-        json.dumps({"actions": actions, "images": images}, indent=2) + "\n", encoding="utf-8"
+    lock_path = ROOT / "tools.lock.json"
+    previous = json.loads(lock_path.read_text()) if lock_path.exists() else {}
+    images.update(
+        {key: value for key, value in previous.get("images", {}).items() if key not in images}
     )
+    previous.update({"actions": actions, "images": images})
+    lock_path.write_text(json.dumps(previous, indent=2) + "\n", encoding="utf-8")
     # Record the resolver's upstream sources in the repository; no auth tokens are stored.
 
 

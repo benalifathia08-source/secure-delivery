@@ -45,11 +45,20 @@
     "zap": {
       "source": "ghcr.io/zaproxy/zaproxy:stable",
       "pinned": "ghcr.io/zaproxy/zaproxy@sha256:5ccfff9a411743ab2615136a2edd7416bec9ce41572fa94e935df38c14adb2b6"
+    },
+    "flux-source": {
+      "source": "ghcr.io/fluxcd/source-controller:v1.9.6",
+      "pinned": "ghcr.io/fluxcd/source-controller@sha256:6a6693172589f8ff26123a231d5fa6ceb194a6efb4dc647cdf057c959f76a2e3"
+    },
+    "flux-kustomize": {
+      "source": "ghcr.io/fluxcd/kustomize-controller:v1.9.6",
+      "pinned": "ghcr.io/fluxcd/kustomize-controller@sha256:2ebeaa341da77d52b6abbbba5efcee0450d47f8b42f0e6f33b08f9020262d606"
     }
   },
   "cluster": {
     "flux": "v2.9.6",
-    "k3s": "v1.37.1+k3s1"
+    "k3s": "v1.37.1+k3s1",
+    "falco": "0.45.1"
   },
   "kubectl": {
     "version": "v1.37.1",

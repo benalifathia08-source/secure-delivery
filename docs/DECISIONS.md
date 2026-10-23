@@ -74,3 +74,16 @@ findings in `/usr/local/bin/gosu`. Since the database always starts as UID 70, i
 does not need the root-to-postgres helper. A minimal derived image removes it and sets USER 70.
 Scan that final image, test it with a read-only root, and publish/promote its exact digest
 alongside the application. No vulnerability suppression was added.
+
+## ADR-014 — Minimal, machine-maintained release branch
+
+Accepted 2026-10-23. Publish only application deployment files and release provenance to
+`lab-release`, not the complete source tree or workflows. This keeps the GitOps trust boundary
+small and avoids granting the promotion token workflow-editing privileges. Source commit and
+CI run ID remain explicit in release.json. Reject stale main runs and mutable image references.
+
+## ADR-015 — Pin controller images and restrict Kustomize sources
+
+Accepted 2026-10-23. Render the pinned Flux release's installation manifests, replace controller
+tags with verified registry digests, and disable remote Kustomize bases and cross-namespace
+references. An upstream release/lock mismatch stops bootstrap for review.

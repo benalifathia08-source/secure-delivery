@@ -34,6 +34,16 @@ def main():
     if api("git/ref/heads/main")["object"]["sha"] != source:
         raise RuntimeError("Refusing stale promotion: main has moved")
     source_commit = api("git/commits/" + source)
+    source_tree = api("git/trees/" + source_commit["tree"]["sha"] + "?recursive=1")
+    if source_tree.get("truncated"):
+        raise RuntimeError("Source tree response was truncated")
+    application_files = [
+        entry
+        for entry in source_tree["tree"]
+        if entry["path"].startswith("deploy/base/") and entry["type"] == "blob"
+    ]
+    if not application_files:
+        raise RuntimeError("Application configuration is missing")
     try:
         previous = api("git/ref/heads/lab-release")["object"]["sha"]
     except urllib.error.HTTPError as error:
@@ -63,8 +73,11 @@ def main():
     tree = api(
         "git/trees",
         {
-            "base_tree": source_commit["tree"]["sha"],
             "tree": [
+                {key: entry[key] for key in ("path", "mode", "type", "sha")}
+                for entry in application_files
+            ]
+            + [
                 {
                     "path": "deploy/overlays/lab/kustomization.yaml",
                     "mode": "100644",
@@ -80,7 +93,7 @@ def main():
         {
             "message": f"release: promote tested source {source[:12]}",
             "tree": tree["sha"],
-            "parents": [previous or source],
+            "parents": [previous] if previous else [],
         },
     )
     if previous:

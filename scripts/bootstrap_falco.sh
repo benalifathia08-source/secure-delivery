@@ -11,8 +11,7 @@ sudo install -m 0644 "$workdir/key.gpg" /usr/share/keyrings/falco-archive-keyrin
 echo 'deb [signed-by=/usr/share/keyrings/falco-archive-keyring.gpg] https://download.falco.org/packages/deb stable main' \
   | sudo tee /etc/apt/sources.list.d/falcosecurity.list >/dev/null
 sudo apt-get update -qq
-version="$(apt-cache policy falco | awk '/Candidate:/ {print $2}')"
-test "$version" != '(none)'
+version='0.45.1'
 sudo env DEBIAN_FRONTEND=noninteractive NEEDRESTART_MODE=l FALCO_FRONTEND=noninteractive \
   FALCO_DRIVER_CHOICE=modern_ebpf FALCOCTL_ENABLED=no apt-get install -y "falco=$version"
 sudo install -d -m 0750 /var/log/falco /var/log/secure-delivery /opt/secure-delivery

@@ -2,7 +2,8 @@
 
 Updated: 2026-10-23 (Africa/Tunis).
 
-**State: application and pipeline implementation ready for first hosted CI run. Not yet deployed.**
+**State: hosted release gates under verification; k3s, Flux and runtime detection operational.
+Application deployment awaits the first fully approved dual-image release.**
 
 | Milestone | State | Completion evidence required |
 |---|---|---|
