@@ -15,8 +15,8 @@
   },
   "images": {
     "python": {
-      "source": "python:3.12-slim-bookworm",
-      "pinned": "python@sha256:6a0e06f5ba0b373d051aabd3fffb9b873f27f9a2a3a14bcbe37dee6f0e3bbc70"
+      "source": "python:3.12-alpine",
+      "pinned": "python@sha256:b658b05ce9c4eb97ec6fc19424818a1f31993659c2b505a532f470e83807815d"
     },
     "postgres": {
       "source": "postgres:17-alpine",
@@ -46,5 +46,14 @@
       "source": "ghcr.io/zaproxy/zaproxy:stable",
       "pinned": "ghcr.io/zaproxy/zaproxy@sha256:5ccfff9a411743ab2615136a2edd7416bec9ce41572fa94e935df38c14adb2b6"
     }
+  },
+  "cluster": {
+    "flux": "v2.9.6",
+    "k3s": "v1.37.1+k3s1"
+  },
+  "kubectl": {
+    "version": "v1.37.1",
+    "windows_amd64_sha256": "14b93c4916a6f37a06fbc1f46b0a1d2404c4f9741be09f00d6caf8af3b05f1d3",
+    "linux_amd64_sha256": "65691ff77eb6fa44c908b77a1082c9f092c3b9733b5cefabec0d1104890e21a8"
   }
 }

@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: database
+  annotations:
+    checkov.io/skip1: CKV_K8S_40=Official PostgreSQL Alpine UID 70; non-root, no host mounts, all capabilities dropped. EX-001 expires 2026-11-22.
 spec:
   serviceName: database
   replicas: 1

@@ -64,7 +64,7 @@ def main():
         actions[repository] = {"tag": tag, "sha": obj["sha"]}
     images = {}
     for name, reference in {
-        "python": "python:3.12-slim-bookworm",
+        "python": "python:3.12-alpine",
         "postgres": "postgres:17-alpine",
         "probe": "alpine:3.22",
         "uv": "ghcr.io/astral-sh/uv:0.13.5",

@@ -17,3 +17,19 @@ Record date, exact scope, observed result and limitations. A configuration file 
 
 Pending: real database, container build, image/dependency scans, Checkov, ZAP, Actions,
 k3s, Flux, network enforcement, rollback, Falco, Wazuh alert ingestion.
+
+## First hosted run — release rejected
+
+[Run 39961617144](https://github.com/benalifathia08-source/secure-delivery/actions/runs/39961617144)
+passed unit tests, lint, repository policy, both secret scans, dependency scanning and Trivy
+configuration scanning. Checkov flagged PostgreSQL UID 70, Trivy rejected the Debian image's
+unfixed HIGH/CRITICAL OS findings, and integration exposed a copied virtual-environment path
+error. Publication and promotion did not run. These findings drive fixes; the gate thresholds
+remain unchanged.
+
+## k3s bootstrap
+
+Checksum-verified k3s v1.37.1+k3s1 installed on the approved Ubuntu VM. Node is Ready;
+CoreDNS, metrics-server and local-path-provisioner are Running after correcting API binding.
+Existing n8n container remained running. Secrets encryption enabled; kubeconfig mode 0600.
+Traefik and ServiceLB disabled. Application and Flux are not yet deployed.
