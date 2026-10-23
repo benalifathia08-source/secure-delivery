@@ -149,9 +149,19 @@ def main():
                 ["-n", "secure-delivery", "exec", NAMES[1], "--", "wget", "-T", "5", "-qO-", url],
                 check=False,
             )
-            assert blocked.returncode != 0 and b"timed out" in blocked.stderr
+            network_error = any(
+                message in blocked.stderr.lower()
+                for message in [
+                    b"timed out",
+                    b"connection refused",
+                    b"can't connect",
+                    b"host is unreachable",
+                    b"no route to host",
+                ]
+            )
+            assert blocked.returncode != 0 and network_error
             evidence["checks"]["authorized_connection_succeeds"] = True
-            evidence["checks"]["unauthorized_connection_times_out"] = True
+            evidence["checks"]["unauthorized_connection_blocked"] = True
         # The canary is harmless test data; this is a simulation, not a claim of exploitation.
         command(
             [

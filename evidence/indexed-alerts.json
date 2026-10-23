@@ -1,0 +1,45 @@
+{
+  "tls_certificate_verified": true,
+  "events": [
+    {
+      "data": {
+        "service": "secure-delivery",
+        "http_status": "200"
+      },
+      "rule": {
+        "level": 3,
+        "id": "112301"
+      },
+      "timestamp": "2026-10-23T14:35:02.193+0000"
+    },
+    {
+      "data": {
+        "service": "secure-delivery",
+        "http_status": "503"
+      },
+      "rule": {
+        "level": 6,
+        "id": "112302"
+      },
+      "timestamp": "2026-10-23T14:28:10.494+0000"
+    },
+    {
+      "data": {
+        "output_fields": {
+          "k8s": {
+            "ns": {
+              "name": "secure-delivery"
+            }
+          }
+        },
+        "rule": "Secure Delivery Canary Read"
+      },
+      "rule": {
+        "level": 10,
+        "id": "112300"
+      },
+      "timestamp": "2026-10-23T14:31:52.628+0000"
+    }
+  ],
+  "sanitization": "Only allowlisted fields queried; credentials, host identity and addresses omitted."
+}

@@ -248,7 +248,7 @@ def main():
                 "json",
                 "--report-path",
                 "/reports/gitleaks.json",
-                "--log-opts=--all",
+                "--log-opts=HEAD",
             ],
         ),
     )

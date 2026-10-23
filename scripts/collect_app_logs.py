@@ -38,6 +38,8 @@ def main():
                     continue
                 if event.get("event") != "http_request" or event.get("request_id") in seen:
                     continue
+                if event.get("route", "").startswith("/health/") and event.get("status") == 200:
+                    continue
                 seen[event["request_id"]] = True
                 fields = ["event", "request_id", "method", "route", "status"]
                 selected = {key: event[key] for key in fields if key in event}

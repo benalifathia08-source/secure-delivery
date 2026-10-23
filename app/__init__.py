@@ -55,7 +55,7 @@ def create_app():
 
     @application.get("/")
     def index():
-        return jsonify(service="secure-delivery", version="0.1.0", api="/api/releases")
+        return jsonify(service="secure-delivery", version="0.1.1", api="/api/releases")
 
     @application.get("/health/live")
     def live():

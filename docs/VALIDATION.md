@@ -66,3 +66,22 @@ of reconciler access to Secrets, other namespaces, and RoleBindings.
 The fourth hosted run passed ZAP and scanner negative tests. It rejected the database's
 unused vulnerable gosu binary and an unsupported Trivy CLI flag. The flag was removed;
 the database image is being rebuilt without the vulnerable executable. Promotion remained blocked.
+
+## Successful secure delivery and enforcement
+
+[Run 39967961637](https://github.com/benalifathia08-source/secure-delivery/actions/runs/39967961637)
+passed all gates and promoted both immutable image digests. Flux applied the release; application
+and database are Ready. [CI summary](../evidence/ci-gates.json),
+[scanner rejection tests](../evidence/scanner-negative-tests.json).
+
+At 14:31 UTC the live cluster test verified authorized application access, denied unauthorized
+access, Restricted admission, scoped reconciler permissions, and another runtime canary trigger.
+[Network evidence](../evidence/network-isolation.json).
+
+Wazuh indexer was queried with local admin certificate authentication and validated server TLS.
+Both rules 112300 (runtime) and 112301 (application) were present.
+[Sanitized indexed events](../evidence/indexed-alerts.json).
+
+A PostgreSQL custom-format backup was stored locally with mode 0600 and restored into a uniquely
+named disposable database. The restored inventory contained the expected data; the temporary
+database was removed. [Restore evidence](../evidence/backup-restore.json).

@@ -87,3 +87,10 @@ CI run ID remain explicit in release.json. Reject stale main runs and mutable im
 Accepted 2026-10-23. Render the pinned Flux release's installation manifests, replace controller
 tags with verified registry digests, and disable remote Kustomize bases and cross-namespace
 references. An upstream release/lock mismatch stops bootstrap for review.
+
+## ADR-016 — Scan candidate ancestry, not unrelated branches
+
+Accepted 2026-10-23. Scan the full history reachable from checked-out HEAD, plus the worktree.
+Scanning every fetched branch lets an unmerged demonstration or untrusted branch block a clean
+main release. Pull-request HEAD includes its proposed ancestry; main still scans all history
+that can reach deployment. A real leaked credential must be revoked even if later removed.

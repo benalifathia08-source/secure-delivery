@@ -3,15 +3,16 @@
 Updated: 2026-10-23 (Africa/Tunis).
 
 **State: hosted release gates under verification; k3s, Flux and runtime detection operational.
-Application deployment awaits the first fully approved dual-image release.**
+Application and database are healthy; network isolation and Wazuh indexing are verified.
+Recovery demonstration and final repository protection are in progress.**
 
 | Milestone | State | Completion evidence required |
 |---|---|---|
 | M0 — Inventory and architecture | Complete | SSH verified, 24 GiB host, Linux resources and existing workloads inspected |
 | M1 — Application and database | Complete | Hosted container startup, PostgreSQL readiness and SELECT-only role verified |
-| M2 — Security gates | In progress | Local Gitleaks and Trivy configuration pass; hosted integration pending |
+| M2 — Security gates | Complete | Hosted run 39967961637 passed all gates, including real negative fixtures |
 | M3 — k3s and Flux delivery | In progress | k3s healthy; Flux installation and first approved promotion pending |
-| M4 — Falco and Wazuh | In progress | Falco 0.45.1 active with modern eBPF; Wazuh rules and collection being configured |
+| M4 — Falco and Wazuh | Complete | Runtime and application events verified in Wazuh indexer over validated TLS |
 | M5 — Portfolio release | Planned | Published GitHub repository, protected branch, complete evidence |
 
 ## Inventory
@@ -34,6 +35,8 @@ Application deployment awaits the first fully approved dual-image release.**
 - Falco 0.45.1 installed from its signed repository; modern eBPF and JSON output active.
 - Controlled canary event verified in Wazuh: rule 112300, level 10, JSON decoder.
 - Live Restricted admission and reconciler RBAC negative tests passed.
+- Allowed pod-to-application access succeeded; equivalent unauthorized connection was rejected.
+- PostgreSQL backup restored into a disposable database with the expected release inventory.
 - Database-image scanning identified vulnerable unused gosu; a non-root derived image now
   removes that executable and is included in the same scan/test/promotion flow.
 

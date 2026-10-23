@@ -1,0 +1,17 @@
+[
+  {
+    "tool": "gitleaks",
+    "expected": "reject",
+    "exit_code": 1
+  },
+  {
+    "tool": "trivy",
+    "expected": "reject",
+    "exit_code": 1
+  },
+  {
+    "tool": "checkov",
+    "expected": "reject",
+    "exit_code": 1
+  }
+]
