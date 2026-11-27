@@ -60,7 +60,7 @@ rollback command. The GitOps rollback creates a new commit, so reconciliation pr
 It does not reverse database migrations. The backup script tests recovery in a disposable
 database without overwriting live data.
 
-Explain all three narrowly scoped exceptions and their 2026-11-22 expiry. No CVE is
+Explain all three narrowly scoped exceptions and their expiry dates. No CVE is
 suppressed. Finish with the project's limits: one local cluster, no public ingress,
 no high availability, no off-host disaster recovery, and no clean-OS rebuild verification.
 The repository supplies a written walkthrough; a video has not been recorded.

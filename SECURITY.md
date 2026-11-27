@@ -19,7 +19,7 @@ EX-001 permits PostgreSQL's official non-root UID 70 for CKV_K8S_40, scoped to t
 EX-002 retains HTTP-only as informational only for the isolated disposable CI target
 `http://app:8080`; it does not exempt any external endpoint from TLS.
 EX-003 permits the application reconciler to manage Services and NetworkPolicies only inside
-its namespace (Trivy KSV-0056). All three expire 2026-11-22.
+its namespace (Trivy KSV-0056). All three were reviewed on 2026-11-27 and expire 2027-02-27.
 `security/exceptions.json` is the review ledger,
 not an automatic suppression mechanism. A future exception must identify its tool, finding,
 scope, reason, owner and expiry, and be applied explicitly in the relevant scanner configuration.

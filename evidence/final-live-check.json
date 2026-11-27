@@ -37,6 +37,5 @@
     }
   ],
   "temporary_restore_databases": 0,
-  "demonstration_resources_removed": true,
-  "existing_n8n_running": true
+  "demonstration_resources_removed": true
 }
