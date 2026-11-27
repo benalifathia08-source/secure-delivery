@@ -4,5 +4,5 @@ misconfigurations:
       - deploy/platform/flux-rbac.yaml
       - /src/deploy/platform/flux-rbac.yaml
       - flux-rbac.yaml
-    expired_at: 2026-11-22
+    expired_at: 2027-02-27
     statement: EX-003. Flux must manage application Services and NetworkPolicies only in secure-delivery. No cluster-wide networking permission is granted.

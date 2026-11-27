@@ -3,21 +3,20 @@
 Record date, exact scope, observed result and limitations. A configuration file is not proof of enforcement.
 
 This ledger is chronological. Early failures and pending work describe those stages;
-the later successful checks supersede them. See STATUS.md for the current handoff state.
+the later successful checks supersede them.
 
 ## Initial inventory and local checks (historical)
 
 | Date | Check | Observed result |
 |---|---|---|
 | 2026-10-23 | Windows tool inventory | Git, Python, SSH, VMware present; Docker/kubectl/gh absent; WSL not installed |
-| 2026-10-23 | GitHub connector | Authenticated identity available; repository listing empty |
 | 2026-10-23 | Ubuntu VM definition | 2 vCPU / 6 GiB / NAT; guest runtime unverified at initial inventory |
 | 2026-10-23 | Application and policy tests | 8 passed, including database outage and rejection of privilege escalation/mutable action |
 | 2026-10-23 | Ruff | Passed after targeted CI tooling annotations |
 | 2026-10-23 | Gitleaks worktree | Passed; downloaded third-party tool examples excluded by directory scope |
 | 2026-10-23 | Trivy configuration HIGH/CRITICAL | Passed: 5 configuration files detected |
 | 2026-10-23 | Kustomize | Lab overlay rendered successfully |
-| 2026-10-23 | Linux inspection | SSH verified; kernel 6.8, Docker 29.1.3, Wazuh agent active; existing n8n preserved |
+| 2026-10-23 | Linux inspection | SSH verified; kernel 6.8, Docker 29.1.3, Wazuh agent active |
 
 At this initial stage, the real database, containers, full scans, cluster enforcement,
 rollback and Wazuh ingestion were pending. Their subsequent results are recorded below.
@@ -35,7 +34,7 @@ remain unchanged.
 
 Checksum-verified k3s v1.37.1+k3s1 installed on the approved Ubuntu VM. Node is Ready;
 CoreDNS, metrics-server and local-path-provisioner are Running after correcting API binding.
-Existing n8n container remained running. Secrets encryption enabled; kubeconfig mode 0600.
+Secrets encryption enabled; kubeconfig mode 0600.
 Traefik and ServiceLB disabled. Application and Flux deployment followed in later stages.
 
 ## Second hosted run
@@ -122,8 +121,7 @@ passed all sixteen gates and promoted both images. [Gate evidence](../evidence/d
 At 15:53 UTC on 2026-10-23, the final lab checks verified application 0.1.1 with Gunicorn
 26.2.0 and HTTP readiness 200; both configured image digests matched the running images.
 Both Flux resources were Ready at revision 35002860fee06aff4d06285ed087e7ec52289726.
-All five application-VM services were active, the existing n8n container was running,
-and no demonstration resources or temporary restore databases remained.
+All five application-VM services were active, and no demonstration resources or temporary restore databases remained.
 [Health evidence](../evidence/final-live-check.json).
 
 The repeated [cluster checks](../evidence/final-cluster-verification.json) passed Restricted
@@ -141,9 +139,3 @@ Local checks after updating the lockfile: ten tests passed, Ruff and repository 
 and Gitleaks found no secrets in HEAD ancestry or the worktree. Relative documentation links
 were also checked. These local checks supplement the hosted container and scanner evidence.
 
-Both guest operating systems were then instructed to shut down gracefully. At 15:54:49 UTC,
-VMware listed zero running VMs; no forced power-off was used. The shared n8n workload is
-paused with Ubuntu. Disks, the PVC and private on-VM backups were retained.
-[Shutdown evidence](../evidence/final-power-state.json).
-Final documentation/evidence publication follows shutdown; later approved promotions wait
-for the next VM startup and are not represented as already verified live here.

@@ -150,7 +150,7 @@ backup/restore plus a compatibility plan before introducing schema changes.
 
 ## Maintenance
 
-Review Dependabot pull requests and all three expiring exceptions before 2026-11-22.
+Review Dependabot pull requests and all three expiring exceptions before 2027-02-27.
 Run scripts/resolve_tools.py deliberately, inspect the upstream changes, and update affected
 Dockerfiles/bootstrap pins together with tools.lock.json. Keep base Python at 3.12 and the
 database on its intended major version; do not blindly follow a new major release.
@@ -158,12 +158,11 @@ database on its intended major version; do not blindly follow a new major releas
 Use .github/branch-protection.json as the declared main-branch protection policy.
 No self-hosted Actions runner is installed in the lab. See THREAT_MODEL.md for limits.
 
-## Resume after the handoff shutdown
+## Restart the lab
 
 In VMware Workstation, start the Wazuh-Server VM first, then the Ubuntu application VM.
 Use their existing private network and SSH identity. No reinstall, credential regeneration
 or database reset is needed. The original database PVC and private on-VM backups persist.
-The separate n8n workload is also paused whenever its shared Ubuntu VM is powered off.
 
 On Wazuh, confirm the existing services have started:
 
@@ -185,7 +184,7 @@ Wait for both Flux resources to report Ready=True. Flux may fetch a newer approv
 published while the VM was off. Internet access is required for new Git/registry content;
 do not assume a cached older release is the latest one. If a service is inactive, inspect
 its system journal before restarting it. Re-run the cluster checks and confirm fresh
-Wazuh indexing before a demonstration. Automatic service startup was inspected at handoff;
+Wazuh indexing before a demonstration. Automatic service startup has been inspected;
 a complete power-off/start recovery drill has not been executed.
 
 ## Graceful shutdown
@@ -198,7 +197,7 @@ On Ubuntu, then on Wazuh, run:
 sudo shutdown -h now
 ```
 
-This shuts down the guest operating systems, including the shared Ubuntu n8n workload.
+This shuts down both guest operating systems.
 Confirm both VMs show Powered off in VMware. Do not delete the VMs, disks, PVC or local
 backup directory. Use VMware's graceful guest shutdown if SSH is unavailable; avoid a
 forced power-off while PostgreSQL or the Wazuh indexer is writing.

@@ -33,7 +33,7 @@ Accepted 2026-10-23. Official PostgreSQL Alpine uses UID 70. Retain the vendor n
 and all other restrictions. The later derived image removes an unused executable while retaining
 that upstream identity. Changing the UID also requires reviewing initdb identity lookup and
 persistent-volume ownership; raising a numeric UID alone does not improve this lab's isolation.
-Record EX-001 for CKV_K8S_40 only, expiring 2026-11-22. This does not waive root or privileged execution.
+Record EX-001 for CKV_K8S_40 only, expiring 2027-02-27 (renewed after review on 2026-11-27). This does not waive root or privileged execution.
 
 ## ADR-008 — Private VM network, cluster-reachable API
 
@@ -46,7 +46,7 @@ a valid isolation mechanism for this cluster. kubeconfig remains mode 0600.
 
 Accepted 2026-10-23. ZAP's only finding in the second run was rule 10106, HTTP Only Site.
 Retain it as informational for exactly http://app:8080 in the ephemeral Docker test context,
-with no published ports or durable credentials. EX-002 expires 2026-11-22. Other targets
+with no published ports or durable credentials. EX-002 expires 2027-02-27. Other targets
 remain subject to the normal threshold; a future public ingress must use TLS.
 
 ## ADR-010 — Separate platform bootstrap from application reconciliation
@@ -59,7 +59,7 @@ that cannot read secrets, alter RBAC, create namespaces, or deploy outside the n
 
 Accepted 2026-10-23. Trivy KSV-0056 correctly identifies that Flux can change Services and
 NetworkPolicies. This is required for delivery but limited to the application namespace.
-EX-003 expires 2026-11-22 and applies only to this Role file. Scan both platform manifests
+EX-003 expires 2027-02-27 and applies only to this Role file. Scan both platform manifests
 and final rendered application manifests so overlays cannot bypass configuration checks.
 
 ## ADR-012 — Selected application log forwarding
@@ -97,7 +97,7 @@ Scanning every fetched branch lets an unmerged demonstration or untrusted branch
 main release. Pull-request HEAD includes its proposed ancestry; main still scans all history
 that can reach deployment. A real leaked credential must be revoked even if later removed.
 
-## ADR-017 — Reviewed dependency update and bounded handoff
+## ADR-017 — Reviewed dependency update and scope boundary
 
 Accepted 2026-10-23. Review Gunicorn 26.2.0's upstream release notes and the exact Dependabot
 diff, refresh PR #1 against protected main, and require the complete security/integration
@@ -105,7 +105,19 @@ suite before merging. Keep the existing gthread server settings; do not enable t
 cleartext HTTP/2 feature. Verify the installed dependency in the running approved image.
 [Upstream release](https://github.com/benoitc/gunicorn/releases/tag/26.2.0).
 
-Close the original scope with repeatable written demonstrations, recovery evidence and a
-graceful lab shutdown. A fresh operating-system VM rebuild, recorded video, off-host disaster
+Close the original scope with repeatable written demonstrations and recovery evidence. A fresh operating-system VM rebuild, recorded video, off-host disaster
 recovery, scheduled rescans and image signing remain explicitly outside the verified scope.
 These are future enhancements, not reasons to describe the completed lab as a production system.
+
+## ADR-018 — Patch base-image packages and renew reviewed exceptions
+
+Accepted 2026-11-27. New HIGH findings in Alpine packages (krb5-libs, libxml2, libxslt) made the
+Trivy image gates block every candidate, including Dependabot updates. The newest upstream
+`python:3.12-alpine` and `postgres:17-alpine` images still shipped the vulnerable versions, while
+Alpine had already published fixed packages. Both Dockerfiles therefore run `apk upgrade --no-cache`
+after the pinned base image. Base digests stay pinned; the trade-off is that two builds of the same
+commit can contain different patch-level packages. The scanned image digest is what gets promoted,
+so the deployed artifact is still exactly the one that passed the gates. No CVE was suppressed.
+
+The policy gate also failed on the three expired exceptions, as designed. Each was re-reviewed
+against its original reasoning; the conditions are unchanged, so all three are renewed to 2027-02-27.

@@ -7,8 +7,7 @@ and connects runtime detection to an existing Wazuh SOC lab.
 
 **Verified on local hardware.** The delivery pipeline, workload restrictions, network isolation,
 runtime detection, Wazuh indexing, database restore and GitOps rollback have been executed.
-See the [status](docs/STATUS.md), [living backlog](docs/BACKLOG.md), and
-[validation ledger](docs/VALIDATION.md) for exact scope and observed results.
+See the [validation ledger](docs/VALIDATION.md) for exact scope and observed results.
 
 ## Demonstration results
 
@@ -24,6 +23,27 @@ See the [status](docs/STATUS.md), [living backlog](docs/BACKLOG.md), and
 
 The runtime canary is a controlled sensitive-file-access simulation. Three narrow, expiring
 exceptions are documented in [SECURITY.md](SECURITY.md); no vulnerability suppression is used.
+
+## What it looks like
+
+The images below are rendered from the saved CI report artifacts and the sanitized files in
+[evidence/](evidence/README.md); nothing in them is mocked.
+
+**A planted credential and a privileged pod are blocked; the clean candidate passes all 16 gates.**
+
+![Security gates: rejected change vs approved release](docs/images/01-security-gates.png)
+
+**The live cluster enforces what the manifests declare.**
+
+![Cluster enforcement checks](docs/images/02-cluster-enforcement.png)
+
+**Falco runtime events and application logs arrive in the Wazuh SOC lab.**
+
+![Wazuh indexed events](docs/images/03-wazuh-events.png)
+
+**Rollback is a Git commit, so Flux keeps it until the next approved release.**
+
+![GitOps rollback and restore](docs/images/04-gitops-rollback.png)
 
 ## Architecture
 
@@ -75,17 +95,31 @@ CI uses an ephemeral database with generated credentials. Kubernetes database cr
 must be generated on the lab host and stored outside Git. Do not deploy the unpromoted
 application sentinel image from main.
 
+## Maintenance
+
+Security gates keep running after the project is "done". In November 2026, new HIGH CVEs in
+Alpine system packages (krb5-libs, libxml2, libxslt) made the Trivy image gates block every
+candidate, including Dependabot updates, and the three documented exceptions reached their
+expiry date, which the policy gate also treats as a failure. Both were handled without
+suppressing anything: the images now apply published Alpine fixes at build time, and each
+exception was re-reviewed and renewed ([ADR-018](docs/DECISIONS.md), [changelog](CHANGELOG.md)).
+
+## Limits and next steps
+
+- Single-node local k3s lab: no public ingress, no high availability, no AWS/Azure deployment.
+- Backups stay on the application VM, so they do not survive loss of that VM.
+- Falco detects and alerts; it does not contain. The runtime test is a harmless canary, not an exploit.
+- Not yet done: a rebuild on a clean OS, off-host encrypted backups, scheduled rescans of the
+  running images, and signed-image admission (for example Cosign with Kyverno).
+
 ## Project documentation
 
-- [Backlog](docs/BACKLOG.md) — milestones, features and acceptance criteria.
-- [Completion report](docs/FINAL_REPORT.md) — delivery, final checks, handoff and remaining maintenance.
 - [Decisions](docs/DECISIONS.md) — choices and tradeoffs.
 - [Validation](docs/VALIDATION.md) — observed results and pending checks.
 - [Threat model](docs/THREAT_MODEL.md) — assumptions and limits.
 - [Operations](docs/OPERATIONS.md) — bootstrap, verification and rollback.
-- [Demonstration guide](docs/DEMO.md) — interview walkthrough and evidence to show.
+- [Walkthrough](docs/DEMO.md) — a ten-minute live demonstration and the evidence to show.
 - [Security policy](SECURITY.md) — gates, exceptions and reporting.
-- [Environment](docs/ENVIRONMENT.md) — verified software and resource inventory.
 - [Evidence index](evidence/README.md) — sanitized results and provenance.
 - [Primary references](docs/SOURCES.md) — upstream documentation.
 
