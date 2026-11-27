@@ -5,7 +5,7 @@ resources:
 images:
   - name: secure-delivery-candidate
     newName: ghcr.io/benalifathia08-source/secure-delivery
-    digest: sha256:8844458e49902f7f0d59a1aa072a87d8fa8e53c67b46e78ff922990a185df546
+    digest: sha256:b903330b890d2a8d90ddb8493e611a2021a42c113235159d70b5fd4d9beb0cc1
   - name: secure-delivery-database
     newName: ghcr.io/benalifathia08-source/secure-delivery-database
-    digest: sha256:6e22b4f1e138507e2afef7afec4067726e7215d3d6deb0b69a9f0f698f1fe29b
+    digest: sha256:07218336b5751ecec11f7cfbb7d5efff86c191a90b10a889f2dfc8bdcda1b9d4
